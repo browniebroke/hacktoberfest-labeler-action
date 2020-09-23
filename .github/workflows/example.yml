@@ -1,0 +1,15 @@
+name: Example
+
+on:
+  schedule:
+    - cron: "0 0 * 10 *"
+  workflow_dispatch:
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: browniebroke/hacktoberfest-labeler-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

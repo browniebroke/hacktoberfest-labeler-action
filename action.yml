@@ -1,0 +1,35 @@
+name: 'Hacktoberfest Labeler Action'
+description: 'A Github Action to label issues for Hacktoberfest'
+branding:
+  icon: tag
+  color: orange
+
+### Action inputs (see also args below)
+inputs:
+  github_token:
+    description: 'Github token to use'
+    required: true
+  edit_label_name:
+    description: 'The label name to edit'
+    required: false
+    default: 'hacktoberfest'
+  edit_label_color:
+    description: 'The label color'
+    required: false
+    default: 'ffa663'
+  edit_label_description:
+    description: 'The label description'
+    required: false
+    default: 'Good issues for Hacktoberfest'
+  filter_label:
+    description: 'The label to use for filtering issues'
+    required: false
+    default: 'good first issue'
+  revert:
+    description: 'If the true the label will be removed instead of added'
+    required: false
+    default: '0'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
