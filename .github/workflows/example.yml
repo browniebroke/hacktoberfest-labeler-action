@@ -1,0 +1,17 @@
+name: Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: browniebroke/hacktoberfest-labeler-action@main
+        with:
+          edit_label_name: 'hacktoberfest'
+          edit_label_color: 'ffa663'
+          edit_label_description: 'Good issues for Hacktoberfest'
+          filter_label: 'good first issue'
+          revert: '0'
