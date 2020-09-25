@@ -4,7 +4,7 @@
 
 ## v1.1.0 (2020-09-25)
 ### Fix
-* Add version to __init__ ([`9840351`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/984035145b8bea9e14fbd3036820a4eb57d119cf))
+* Add version to `__init__` to fix deployment ([`9840351`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/984035145b8bea9e14fbd3036820a4eb57d119cf))
 * Bug with empty string from input ([`31c3b22`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/31c3b22fe60b6e23c632a5f282d0b5289b6f208c))
 
 ## v1 (2020-09-24)
