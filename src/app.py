@@ -1,9 +1,12 @@
+import os
 from typing import List
 
 from environs import Env
 from github import Github, UnknownObjectException
 from github.Label import Label
 from github.Repository import Repository
+
+env = Env()
 
 
 def main(
@@ -82,7 +85,13 @@ if __name__ == "__main__":
     input_label_color = env("INPUT_EDIT_LABEL_COLOR")
     input_label_description = env("INPUT_EDIT_LABEL_DESCRIPTION")
     input_filter_labels = env.list("INPUT_FILTER_LABEL")
-    input_revert = env.bool("INPUT_REVERT")
+
+    # In case it's set to an empty string, use default value
+    if os.getenv("INPUT_REVERT", None) == "":
+        input_revert = False
+    else:
+        input_revert = env.bool("INPUT_REVERT")
+
     main(
         gh_token,
         gh_repository,
