@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: browniebroke/hacktoberfest-labeler-action@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.CPR_GITHUB_TOKEN }}
