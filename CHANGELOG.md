@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.0 (2020-10-21)
+### Feature
+* Add hacktoberfest topic to the repo ([`666cd9f`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/666cd9faf9afb208f229b25ef3b999360d1bf6d5))
+
+### Fix
+* Use personal token ([`6d1adef`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/6d1adef42353c74bce9e86cc2dcd2464f527aa3b))
+
+### Breaking
+* introduced a date based behaviour to apply or revert based on the month of the year.  ([`666cd9f`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/666cd9faf9afb208f229b25ef3b999360d1bf6d5))
+
+### Documentation
+* Explain PAT usage ([`bbe7a42`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/bbe7a426f48e2eeb05e050a75f8c32dd387032bc))
+
 ## v1.1.0 (2020-09-25)
 ### Fix
 * Add version to `__init__` to fix deployment ([`9840351`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/984035145b8bea9e14fbd3036820a4eb57d119cf))
