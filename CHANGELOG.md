@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.1 (2020-10-21)
+### Fix
+* Action metadata ([`5ba9abc`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/5ba9abcd67b664b3344296f49127059a0275d98e))
+
 ## v2.0.0 (2020-10-21)
 ### Feature
 * Add hacktoberfest topic to the repo ([`666cd9f`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/666cd9faf9afb208f229b25ef3b999360d1bf6d5))
