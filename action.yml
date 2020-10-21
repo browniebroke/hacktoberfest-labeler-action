@@ -1,5 +1,5 @@
-name: 'Hacktoberfest Labeler Action'
-description: 'A Github Action to label issues for Hacktoberfest'
+name: 'Hacktoberfest Labeler'
+description: 'A Github Action to automate Hacktoberfest'
 branding:
   icon: tag
   color: orange
