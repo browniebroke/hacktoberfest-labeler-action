@@ -1,3 +1,4 @@
+import datetime as dt
 import os
 from typing import List
 
@@ -34,6 +35,7 @@ def main(
     repo = gh.get_repo(github_repository)
     if revert:
         remove_label(repo, edit_label)
+        remove_topic(repo)
     else:
         label_to_add = get_or_create_label(
             repo,
@@ -42,6 +44,7 @@ def main(
             edit_label_description,
         )
         add_label(repo, filter_label_names, label_to_add)
+        add_topic(repo)
 
 
 def remove_label(repo: Repository, edit_label: str):
@@ -49,6 +52,14 @@ def remove_label(repo: Repository, edit_label: str):
     issues_list = repo.get_issues(state="open", labels=[edit_label])
     for issue in issues_list:
         issue.remove_from_labels(edit_label)
+
+
+def remove_topic(repo: Repository):
+    """Remove hacktoberfest topic from repo."""
+    topics_list = repo.get_topics()
+    if "hacktoberfest" in topics_list:
+        topics_list = [t for t in topics_list if t != "hacktoberfest"]
+        repo.replace_topics(topics_list)
 
 
 def get_or_create_label(
@@ -76,6 +87,14 @@ def add_label(repo: Repository, filter_label_names: List[str], label_to_add: Lab
         issue.add_to_labels(label_to_add)
 
 
+def add_topic(repo: Repository):
+    """Add hacktoberfest topic to the repo."""
+    topics_list = repo.get_topics()
+    if "hacktoberfest" not in topics_list:
+        topics_list.append("hacktoberfest")
+        repo.replace_topics(topics_list)
+
+
 if __name__ == "__main__":
     env = Env()
     env.read_env()
@@ -86,9 +105,11 @@ if __name__ == "__main__":
     input_label_description = env("INPUT_EDIT_LABEL_DESCRIPTION")
     input_filter_labels = env.list("INPUT_FILTER_LABEL")
 
-    # In case it's set to an empty string, use default value
+    # In case it's set to an empty string, revert depending on date:
+    # Revert if we're not in October
     if os.getenv("INPUT_REVERT", None) == "":
-        input_revert = False
+        today = dt.date.today()
+        input_revert = today.month != 10
     else:
         input_revert = env.bool("INPUT_REVERT")
 
