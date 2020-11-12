@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "labels": ["dependencies"],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  }
+}
