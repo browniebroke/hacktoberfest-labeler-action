@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
   pull_request:
 
 jobs:
-  test:
+  lint:
     strategy:
       fail-fast: false
       matrix:
         script:
-          - flake8 --config=setup.cfg
+          - flake8
           - black --check .
           - pyupgrade --py3-plus `find . -name "*.py"`
           - isort -c -v .
@@ -23,11 +23,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+    - uses: abatilo/actions-poetry@v2.1.0
     - name: Install Dependencies
-      run: |
-        python -m pip install -U pip
-        pip install -r requirements.txt
-    - run: ${{ matrix.script }}
+      run: poetry install
+    - run: poetry run ${{ matrix.script }}
 
   commitlint:
     runs-on: ubuntu-latest
