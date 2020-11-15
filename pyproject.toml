@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hacktoberfest-labeler-action"
-version = "2.0.1"
+version = "2.1.0"
 description = "A Github Action to automate Hacktoberfest"
 authors = ["Bruno Alla <alla.brunoo@gmail.com>"]
 license = "MIT"
