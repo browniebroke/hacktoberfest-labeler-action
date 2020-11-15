@@ -4,7 +4,7 @@ A Github Action to opt-in to Hacktoberfest every year.
 
 ## Usage
 
-This workflow will be adding the `hacktoberfest` topic to your repo and label all the issues flagged as `good first issue` with the `hacktoberfest` label. 
+This workflow will be adding the `hacktoberfest` topic to your repo and label all the issues flagged as `good first issue` with the `hacktoberfest` label.
 
 The workflow will behave differently if executed in October. You can run it once at the beginning of November to remove the `hacktoberfest` topic from your repo and un-label your issues.
 
@@ -19,7 +19,7 @@ on:
     - cron: "0 13 1 11 *"
 
 jobs:
-  example:
+  hacktoberfest:
     runs-on: ubuntu-latest
 
     steps:

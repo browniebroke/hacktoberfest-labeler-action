@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  example:
+  hacktoberfest:
     runs-on: ubuntu-latest
 
     steps:
