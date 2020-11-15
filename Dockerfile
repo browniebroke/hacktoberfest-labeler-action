@@ -3,8 +3,9 @@ FROM python:3.8-slim
 # Create app directory
 WORKDIR /app
 
-# Install poetry
-RUN pip install poetry
+# Install poetry & disable virtual environemnt
+RUN pip install poetry && \
+    poetry config virtualenvs.create false
 
 # Copy config files
 COPY pyproject.toml poetry.lock ./
@@ -16,4 +17,4 @@ RUN poetry install --no-root --no-dev
 COPY src /app
 
 # Run the app
-ENTRYPOINT ["poetry", "run", "python", "/app/app.py"]
+ENTRYPOINT ["python", "/app/app.py"]
