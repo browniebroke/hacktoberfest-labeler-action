@@ -5,6 +5,7 @@ on:
     - cron: "0 0 * 10 *"
     - cron: "0 13 1 11 *"
   workflow_dispatch:
+  push:
 
 jobs:
   hacktoberfest:
