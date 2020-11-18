@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.2.0 (2020-11-18)
+### Feature
+* Update python docker tag to v3.9 (#30) ([`a68699a`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/a68699a9059d005e1b34dbf4e6e4784329b7b091))
+
 ## v2.1.0 (2020-11-15)
 ### Feature
 * Migrate project to Poetry ([`c6983b1`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/c6983b1b2045cf19aabf0a47c385cbef9e55eb3f))
