@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: browniebroke/hacktoberfest-labeler-action@main
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
 ```
 
 Note that the default `secrets.GITHUB_TOKEN` hasn't got [enough permissions][token-permissions], and cannot update the repository's topics. You should create a repo scoped  [personal access token][pat] instead.

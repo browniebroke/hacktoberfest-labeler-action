@@ -1,4 +1,4 @@
-name: Example
+name: Hacktoberfest
 
 on:
   schedule:
@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: browniebroke/hacktoberfest-labeler-action@main
         with:
-          github_token: ${{ secrets.CPR_GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
