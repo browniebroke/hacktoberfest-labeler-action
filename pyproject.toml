@@ -24,7 +24,7 @@ PyGithub = "^1.53"
 black = "^20.8b1"
 flake8 = "^4.0.0"
 isort = "^5.6.4"
-pyupgrade = { version = "^2.7.3", python = "^3.6.1" }
+pyupgrade = "^2.7.3"
 
 [tool.semantic_release]
 branch = "main"
