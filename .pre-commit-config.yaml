@@ -1,4 +1,5 @@
-exclude: "CHANGELOG.md|tests/cassettes/"
+exclude: "CHANGELOG.md"
+default_stages: [commit]
 
 ci:
   autofix_commit_msg: "chore(pre-commit.ci): auto fixes"
@@ -28,10 +29,10 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 21.12b0
     hooks:
       - id: black
-  - repo: https://gitlab.com/PyCQA/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
