@@ -21,7 +21,7 @@ environs = "^9.2.0"
 PyGithub = "^1.53"
 
 [tool.poetry.dev-dependencies]
-black = "^21.11b1"
+black = "^22.1"
 flake8 = "^4.0.0"
 isort = "^5.10.1"
 pyupgrade = "^2.29.1"
