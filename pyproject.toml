@@ -24,7 +24,7 @@ PyGithub = "^1.53"
 black = "^22.1"
 flake8 = "^4.0.0"
 isort = "^5.10.1"
-pyupgrade = "^2.29.1"
+pyupgrade = "^2.31"
 
 [tool.semantic_release]
 branch = "main"
