@@ -17,12 +17,12 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-environs = "^9.2.0"
+environs = "^9.2"
 PyGithub = "^1.53"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1"
-flake8 = "^4.0.0"
+flake8 = "^4.0"
 isort = "^5.10"
 pyupgrade = "^2.31"
 
