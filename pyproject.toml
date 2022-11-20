@@ -20,7 +20,7 @@ python = "^3.8"
 environs = "^9.2"
 PyGithub = "^1.53"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 
 [tool.semantic_release]
 branch = "main"
