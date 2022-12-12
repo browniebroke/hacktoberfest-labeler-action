@@ -3,18 +3,11 @@ FROM python:3.11-slim
 # Create app directory
 WORKDIR /app
 
-# Install poetry & disable virtual environment
-RUN pip install poetry && \
-    poetry config virtualenvs.create false
+# Copy file containing dependencies
+COPY . .
 
-# Copy config files
-COPY pyproject.toml poetry.lock ./
-
-# Install only main dependencies
-RUN poetry install --no-root --no-dev
-
-# Copies source code
-COPY src /app
+# Install dependencies using PEP 517 Build Backend
+RUN pip install .
 
 # Run the app
-ENTRYPOINT ["python", "/app/app.py"]
+CMD ["python", "/app/src/app.py"]
