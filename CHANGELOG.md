@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v2.3.0 (2022-12-12)
+### Feature
+* Install deps using PEP 517 ([#329](https://github.com/browniebroke/hacktoberfest-labeler-action/issues/329)) ([`007630a`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/007630abc8953a408822be2c3dd36b8f1cd01dc2))
+
+### Fix
+* Revert to Python 3.9 ([`1409765`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/1409765bb807e2a02e511815d538910c6e6dd222))
+* Use action from current branch ([`3ce2487`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/3ce2487dd0aaccdc30bd39fe2b433059e449349b))
+
+### Documentation
+* Update README.md to suggest forking due to GitHub's wide permission scopes ([#265](https://github.com/browniebroke/hacktoberfest-labeler-action/issues/265)) ([`cdec691`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/cdec69185fc02b23e5d5df75893494d35077a29d))
+
 ## v2.2.0 (2020-11-18)
 ### Feature
 * Update python docker tag to v3.9 (#30) ([`a68699a`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/a68699a9059d005e1b34dbf4e6e4784329b7b091))
