@@ -1,0 +1,10 @@
+.flake8
+.git
+.gitignore
+.github
+.gitpod.yml
+.pre-commit-config.yaml
+action.yml
+CHANGELOG.md
+commitlint.config.json
+renovate.json

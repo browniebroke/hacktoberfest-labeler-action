@@ -4,13 +4,10 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy file containing dependencies
-COPY pyproject.toml ./
+COPY . .
 
 # Install dependencies using PEP 517 Build Backend
 RUN pip install .
 
-# Copy source code
-COPY src /app
-
 # Run the app
-ENTRYPOINT ["python", "/app/app.py"]
+CMD ["python", "/app/src/app.py"]

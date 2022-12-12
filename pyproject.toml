@@ -14,6 +14,9 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development"
 ]
+packages = [
+    { include = "app.py", from = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
