@@ -30,7 +30,6 @@ def main(
     :param edit_label_description: The description label to be edited.
     :param revert: Remove label instead of adding it.
     """
-
     gh = Github(login_or_token=github_token)
     repo = gh.get_repo(github_repository)
     if revert:
