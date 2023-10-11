@@ -28,7 +28,9 @@ PyGithub = "^2.0.0"
 [tool.semantic_release]
 branch = "main"
 version_toml = ["pyproject.toml:tool.poetry.version"]
-version_variable = "src/__init__.py:__version__"
+version_variables = [
+    "src/__init__.py:__version__",
+]
 build_command = "pip install poetry && poetry build"
 upload_to_pypi = false
 upload_to_release = false
