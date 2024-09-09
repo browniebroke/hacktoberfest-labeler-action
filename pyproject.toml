@@ -1,21 +1,25 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [ "poetry-core>=1" ]
+
 [tool.poetry]
 name = "hacktoberfest-labeler-action"
 version = "2.3.0"
 description = "A Github Action to automate Hacktoberfest"
-authors = ["Bruno Alla <alla.brunoo@gmail.com>"]
+authors = [ "Bruno Alla <alla.brunoo@gmail.com>" ]
 license = "MIT"
 readme = "README.md"
-keywords = ["github", "actions", "hacktoberfest"]
+keywords = [ "github", "actions", "hacktoberfest" ]
 repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "Natural Language :: English",
-    "Operating System :: OS Independent",
-    "Topic :: Software Development"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development",
 ]
 packages = [
-    { include = "app.py", from = "src" },
+  { include = "app.py", from = "src" },
 ]
 
 [tool.poetry.dependencies]
@@ -25,10 +29,47 @@ PyGithub = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 
+[tool.ruff]
+target-version = "py38"
+line-length = 88
+
+lint.select = [
+  "B",   # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "D",   # flake8-docstrings
+  "E",   # pycodestyle
+  "F",   # pyflake
+  "I",   # isort
+  "RUF", # ruff specific
+  "S",   # flake8-bandit
+  "UP",  # pyupgrade
+  "W",   # pycodestyle
+]
+lint.ignore = [
+  "D100", # Missing docstring in public module
+  "D104", # Missing docstring in public package
+  "D107", # Missing docstring in `__init__`
+  "D203", # 1 blank line required before class docstring
+  "D212", # Multi-line docstring summary should start at the first line
+  "D401", # First line of docstring should be in imperative mood
+]
+lint.per-file-ignores."tests/**/*" = [
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "S101",
+]
+lint.isort.known-first-party = [ "tests", "src" ]
+
+[tool.pytest.ini_options]
+addopts = "-v -Wdefault --cov=src"
+
 [tool.semantic_release]
-version_toml = ["pyproject.toml:tool.poetry.version"]
+version_toml = [ "pyproject.toml:tool.poetry.version" ]
 version_variables = [
-    "src/__init__.py:__version__",
+  "src/__init__.py:__version__",
 ]
 build_command = "pip install poetry && poetry build"
 upload_to_pypi = false
@@ -36,9 +77,9 @@ upload_to_release = false
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = [
-    "chore.*",
-    "ci.*",
-    "Merge pull request .*",
+  "chore.*",
+  "ci.*",
+  "Merge pull request .*",
 ]
 
 [tool.semantic_release.changelog.environment]
@@ -50,49 +91,3 @@ match = "main"
 [tool.semantic_release.branches.noop]
 match = "(?!main$)"
 prerelease = true
-
-[tool.pytest.ini_options]
-addopts = "-v -Wdefault --cov=src"
-
-[tool.ruff]
-target-version = "py38"
-line-length = 88
-
-[tool.ruff.lint]
-ignore = [
-    "D203", # 1 blank line required before class docstring
-    "D212", # Multi-line docstring summary should start at the first line
-    "D100", # Missing docstring in public module
-    "D104", # Missing docstring in public package
-    "D107", # Missing docstring in `__init__`
-    "D401", # First line of docstring should be in imperative mood
-]
-select = [
-    "B",   # flake8-bugbear
-    "D",   # flake8-docstrings
-    "C4",  # flake8-comprehensions
-    "S",   # flake8-bandit
-    "F",   # pyflake
-    "E",   # pycodestyle
-    "W",   # pycodestyle
-    "UP",  # pyupgrade
-    "I",   # isort
-    "RUF", # ruff specific
-]
-
-[tool.ruff.lint.per-file-ignores]
-"tests/**/*" = [
-    "D100",
-    "D101",
-    "D102",
-    "D103",
-    "D104",
-    "S101",
-]
-
-[tool.ruff.lint.isort]
-known-first-party = ["tests", "src"]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
