@@ -36,8 +36,9 @@ upload_to_release = false
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = [
-    "chore*",
-    "ci*",
+    "chore.*",
+    "ci.*",
+    "Merge pull request .*",
 ]
 
 [tool.semantic_release.changelog.environment]
