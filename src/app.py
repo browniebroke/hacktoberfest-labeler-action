@@ -1,6 +1,5 @@
 import datetime as dt
 import os
-from typing import List
 
 from environs import Env
 from github import Github, UnknownObjectException
@@ -13,7 +12,7 @@ env = Env()
 def main(
     github_token: str,
     github_repository: str,
-    filter_label_names: List[str],
+    filter_label_names: list[str],
     edit_label: str,
     edit_label_color: str,
     edit_label_description: str,
@@ -79,7 +78,7 @@ def get_or_create_label(
     return label_to_add
 
 
-def add_label(repo: Repository, filter_label_names: List[str], label_to_add: Label):
+def add_label(repo: Repository, filter_label_names: list[str], label_to_add: Label):
     """Add given label to all issues labeled with filter label."""
     issues_list = repo.get_issues(state="open", labels=filter_label_names)
     for issue in issues_list:
