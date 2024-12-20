@@ -1,33 +1,44 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = [ "poetry-core>=1" ]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools" ]
 
-[tool.poetry]
+[project]
 name = "hacktoberfest-labeler-action"
 version = "2.3.0"
 description = "A Github Action to automate Hacktoberfest"
-authors = [ "Bruno Alla <alla.brunoo@gmail.com>" ]
-license = "MIT"
 readme = "README.md"
-keywords = [ "github", "actions", "hacktoberfest" ]
-repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
+keywords = [
+  "actions",
+  "github",
+  "hacktoberfest",
+]
+license = { text = "MIT" }
+authors = [
+  { name = "Bruno Alla", email = "alla.brunoo@gmail.com" },
+]
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Software Development",
 ]
-packages = [
-  { include = "app.py", from = "src" },
+
+dependencies = [
+  "environs>=11,<12",
+  "pygithub>=2,<3",
 ]
+urls.repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-environs = "^11.0.0"
-PyGithub = "^2.0.0"
-
-[tool.poetry.group.dev.dependencies]
+[dependency-groups]
+dev = [  ]
 
 [tool.ruff]
 target-version = "py39"
@@ -67,11 +78,16 @@ lint.isort.known-first-party = [ "tests", "src" ]
 addopts = "-v -Wdefault --cov=src"
 
 [tool.semantic_release]
-version_toml = [ "pyproject.toml:tool.poetry.version" ]
+version_toml = [ "pyproject.toml:project.version" ]
 version_variables = [
   "src/__init__.py:__version__",
 ]
-build_command = "pip install poetry && poetry build"
+build_command = """
+pip install uv
+uv lock
+git add uv.lock
+uv build
+"""
 upload_to_pypi = false
 upload_to_release = false
 
