@@ -1,33 +1,6 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = [ "poetry-core>=1" ]
-
-[tool.poetry]
-name = "hacktoberfest-labeler-action"
-version = "2.3.0"
-description = "A Github Action to automate Hacktoberfest"
-authors = [ "Bruno Alla <alla.brunoo@gmail.com>" ]
-license = "MIT"
-readme = "README.md"
-keywords = [ "github", "actions", "hacktoberfest" ]
-repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Intended Audience :: Developers",
-  "Natural Language :: English",
-  "Operating System :: OS Independent",
-  "Topic :: Software Development",
-]
-packages = [
-  { include = "app.py", from = "src" },
-]
-
-[tool.poetry.dependencies]
-python = "^3.9"
-environs = "^11.0.0"
-PyGithub = "^2.0.0"
-
-[tool.poetry.group.dev.dependencies]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools" ]
 
 [tool.ruff]
 target-version = "py39"
@@ -67,11 +40,16 @@ lint.isort.known-first-party = [ "tests", "src" ]
 addopts = "-v -Wdefault --cov=src"
 
 [tool.semantic_release]
-version_toml = [ "pyproject.toml:tool.poetry.version" ]
+version_toml = [ "pyproject.toml:project.version" ]
 version_variables = [
   "src/__init__.py:__version__",
 ]
-build_command = "pip install poetry && poetry build"
+build_command = """
+pip install uv
+uv lock
+git add uv.lock
+uv build
+"""
 upload_to_pypi = false
 upload_to_release = false
 
@@ -91,3 +69,36 @@ match = "main"
 [tool.semantic_release.branches.noop]
 match = "(?!main$)"
 prerelease = true
+
+[dependency-groups]
+dev = []
+
+[project]
+authors = [
+    {name = "Bruno Alla", email = "alla.brunoo@gmail.com"},
+]
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = [
+    "environs<12.0.0,>=11.0.0",
+    "PyGithub<3.0.0,>=2.0.0",
+]
+name = "hacktoberfest-labeler-action"
+version = "2.3.0"
+description = "A Github Action to automate Hacktoberfest"
+readme = "README.md"
+keywords = [
+    "github",
+    "actions",
+    "hacktoberfest",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development",
+]
+
+[project.urls]
+repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
