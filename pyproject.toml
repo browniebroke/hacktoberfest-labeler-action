@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = [ "setuptools" ]
+requires = [ "setuptools>=77.0.3" ]
 
 [project]
 name = "hacktoberfest-labeler-action"
@@ -12,7 +12,7 @@ keywords = [
   "github",
   "hacktoberfest",
 ]
-license = { text = "MIT" }
+license = "MIT"
 authors = [
   { name = "Bruno Alla", email = "alla.brunoo@gmail.com" },
 ]
