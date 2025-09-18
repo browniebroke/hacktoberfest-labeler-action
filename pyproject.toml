@@ -73,6 +73,9 @@ lint.per-file-ignores."tests/**/*" = [
 ]
 lint.isort.known-first-party = [ "tests", "src" ]
 
+[tool.pyproject-fmt]
+max_supported_python = "3.14"
+
 [tool.pytest.ini_options]
 addopts = "-v -Wdefault --cov=src"
 
