@@ -13,11 +13,10 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Python Semantic Release
-        uses: relekang/python-semantic-release@v10.4.1
+      - name: Release
+        uses: python-semantic-release/python-semantic-release@v10
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
 
       # Update major and minor tags
       - name: Make minor and major tags
