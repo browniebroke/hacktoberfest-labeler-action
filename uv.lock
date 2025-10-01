@@ -215,15 +215,16 @@ wheels = [
 
 [[package]]
 name = "environs"
-version = "12.0.0"
+version = "14.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "marshmallow" },
     { name = "python-dotenv" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/52/97/d711048c5f277de3a45077fc35764c7d78ebb6670d8d8714ccc7c475e24b/environs-12.0.0.tar.gz", hash = "sha256:6150ddeb05562a80cc789b308c650d33b98a5f9c3f4c63d9ed465c433f1cb9e2", size = 28245, upload-time = "2025-01-06T23:32:39.275Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7f/7c/db59db76a70254aa0f9de2b509379b09ab89b2c1fa309acb8daf02e06ec2/environs-14.3.0.tar.gz", hash = "sha256:20672d92db325ce8114872b1989104eb84f083486325b5a44bcddff56472a384", size = 34209, upload-time = "2025-08-01T15:56:54.39Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3f/16/23e5b8fe9d3b8de33713d0b3ad478d0eafd3912051fad358a5f5f697cbb9/environs-12.0.0-py3-none-any.whl", hash = "sha256:152068ba62185b99d87df5f6d6044c0e533261777119037e718c1397fc7d697f", size = 13148, upload-time = "2025-01-06T23:32:37.873Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/e3/98d8567eb438c7856a4dcedd97a8a7c6707120a5ada6f7d84ace44fd8591/environs-14.3.0-py3-none-any.whl", hash = "sha256:91e4c4ea964be277855cdd83a588f6375f10fad9fa452660ecb9f503c230f26a", size = 16355, upload-time = "2025-08-01T15:56:52.897Z" },
 ]
 
 [[package]]
@@ -237,7 +238,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "environs", specifier = ">=12,<13" },
+    { name = "environs", specifier = ">=14,<15" },
     { name = "pygithub", specifier = ">=2,<3" },
 ]
 
