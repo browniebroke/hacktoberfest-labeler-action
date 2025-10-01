@@ -27,7 +27,7 @@ jobs:
           MAJOR=$(echo "${FULL_TAG}" | cut -d'.' -f1)
           echo "Got minor and major tags: ${MINOR}, ${MAJOR}"
           git tag "${MINOR}"
-          git tag "${MAJOR}"
+          git tag -f "${MAJOR}"
       - name: Push tags
         run: git push origin HEAD:refs/heads/main --tags --force
         env:
