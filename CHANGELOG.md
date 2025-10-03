@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2.4.1 (2025-10-03)
+
+### Bug fixes
+
+- Update how deps are specified ([`1e7e741`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/1e7e7417d7fbccb6a9120a00226d725c48173633))
+- Force update major tag during release ([`791ebe5`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/791ebe5a377d5235cb1621823038129031cbacf2))
+
 ## v2.4.0 (2025-10-01)
 
 ### Bug fixes
