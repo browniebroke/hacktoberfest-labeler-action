@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.4.2 (2025-10-03)
+
+### Bug fixes
+
+- Fix updating of git tags ([`a82d64c`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/a82d64cff2d668f095e1bfacfa4217faab37406f))
+
 ## v2.4.1 (2025-10-03)
 
 ### Bug fixes
