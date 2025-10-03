@@ -32,8 +32,8 @@ classifiers = [
 ]
 
 dependencies = [
-  "environs>=14,<15",
-  "pygithub>=2,<3",
+  "environs==14.*",
+  "pygithub==2.*",
 ]
 urls.repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
 
