@@ -32,7 +32,7 @@ class TestMain:
 
         # Execute
         main(
-            github_token="test_token",
+            github_token="test_token",  # noqa: S106
             github_repository="owner/repo",
             filter_label_names=["good first issue"],
             edit_label="hacktoberfest",
@@ -42,7 +42,7 @@ class TestMain:
         )
 
         # Verify
-        mock_github_class.assert_called_once_with(login_or_token="test_token")
+        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_label.assert_called_once_with("hacktoberfest")
         mock_repo.get_issues.assert_called_once_with(
@@ -63,7 +63,7 @@ class TestMain:
 
         # Execute
         main(
-            github_token="test_token",
+            github_token="test_token",  # noqa: S106
             github_repository="owner/repo",
             filter_label_names=["good first issue"],
             edit_label="hacktoberfest",
@@ -73,7 +73,7 @@ class TestMain:
         )
 
         # Verify
-        mock_github_class.assert_called_once_with(login_or_token="test_token")
+        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["hacktoberfest"]
@@ -310,7 +310,7 @@ class TestMainEntryPoint:
             mock_env.bool.return_value = False
 
             # Simulate running the script
-            exec(
+            exec(  # noqa: S102
                 compile(
                     open(
                         "/Users/bruno/Documents/Workspace/oss/sources/hacktoberfest-labeler-action/src/app.py"
