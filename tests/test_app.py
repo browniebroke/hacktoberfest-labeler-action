@@ -4,6 +4,7 @@ import datetime as dt
 from unittest.mock import MagicMock, call, patch
 
 import pytest
+import time_machine
 from github import UnknownObjectException
 
 from src.app import (
@@ -314,7 +315,7 @@ class TestMainEntryPoint:
                 )
             )
 
-    @patch("src.app.dt.date")
+    @time_machine.travel("2024-10-15")
     @patch.dict(
         "os.environ",
         {
@@ -327,12 +328,8 @@ class TestMainEntryPoint:
             "INPUT_REVERT": "",
         },
     )
-    def test_revert_logic_october(self, mock_date):
+    def test_revert_logic_october(self):
         """Test that revert is False when in October and INPUT_REVERT is empty."""
-        mock_today = MagicMock()
-        mock_today.month = 10
-        mock_date.today.return_value = mock_today
-
         # Simulate the revert logic
         import os
 
@@ -344,19 +341,15 @@ class TestMainEntryPoint:
 
         assert input_revert is False
 
-    @patch("src.app.dt.date")
+    @time_machine.travel("2024-11-15")
     @patch.dict(
         "os.environ",
         {
             "INPUT_REVERT": "",
         },
     )
-    def test_revert_logic_not_october(self, mock_date):
+    def test_revert_logic_not_october(self):
         """Test that revert is True when not in October and INPUT_REVERT is empty."""
-        mock_today = MagicMock()
-        mock_today.month = 11
-        mock_date.today.return_value = mock_today
-
         # Simulate the revert logic
         import os
 
