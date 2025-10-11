@@ -1,9 +1,8 @@
 """Tests for the hacktoberfest-labeler-action app."""
 
 import datetime as dt
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import MagicMock, patch
 
-import pytest
 import time_machine
 from github import UnknownObjectException
 
@@ -147,7 +146,11 @@ class TestRemoveTopic:
 
     def test_remove_topic_present_with_others(self, mock_repo):
         """Test removing topic when other topics exist."""
-        mock_repo.get_topics.return_value = ["python", "hacktoberfest", "github-actions"]
+        mock_repo.get_topics.return_value = [
+            "python",
+            "hacktoberfest",
+            "github-actions",
+        ]
 
         remove_topic(mock_repo)
 
@@ -241,9 +244,7 @@ class TestAddLabel:
 
         add_label(mock_repo, filter_labels, mock_label)
 
-        mock_repo.get_issues.assert_called_once_with(
-            state="open", labels=filter_labels
-        )
+        mock_repo.get_issues.assert_called_once_with(state="open", labels=filter_labels)
         mock_issue.add_to_labels.assert_called_once_with(mock_label)
 
 
@@ -263,7 +264,11 @@ class TestAddTopic:
 
     def test_add_topic_already_present(self, mock_repo):
         """Test adding topic when it's already present."""
-        mock_repo.get_topics.return_value = ["python", "hacktoberfest", "github-actions"]
+        mock_repo.get_topics.return_value = [
+            "python",
+            "hacktoberfest",
+            "github-actions",
+        ]
 
         add_topic(mock_repo)
 
