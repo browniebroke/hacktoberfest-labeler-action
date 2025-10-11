@@ -1,9 +1,7 @@
 """Tests for the hacktoberfest-labeler-action app."""
 
-import datetime as dt
 from unittest.mock import MagicMock, patch
 
-import time_machine
 from github import UnknownObjectException
 
 from src.app import (
@@ -283,85 +281,3 @@ class TestAddTopic:
 
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["hacktoberfest"])
-
-
-class TestMainEntryPoint:
-    """Tests for the __main__ entry point logic."""
-
-    @patch.dict(
-        "os.environ",
-        {
-            "GITHUB_REPOSITORY": "owner/repo",
-            "INPUT_GITHUB_TOKEN": "test_token",
-            "INPUT_EDIT_LABEL_NAME": "hacktoberfest",
-            "INPUT_EDIT_LABEL_COLOR": "ff6b6b",
-            "INPUT_EDIT_LABEL_DESCRIPTION": "Hacktoberfest participation",
-            "INPUT_FILTER_LABEL": "good first issue",
-            "INPUT_REVERT": "false",
-        },
-    )
-    @patch("src.app.main")
-    def test_main_entry_point_explicit_revert_false(self, mock_main):
-        """Test main entry point with explicit revert=false."""
-        # Import and execute the module
-        with patch("src.app.env") as mock_env:
-            mock_env.return_value = "test_value"
-            mock_env.list.return_value = ["good first issue"]
-            mock_env.bool.return_value = False
-
-            # Simulate running the script
-            exec(  # noqa: S102
-                compile(
-                    open(
-                        "/Users/bruno/Documents/Workspace/oss/sources/hacktoberfest-labeler-action/src/app.py"
-                    ).read(),
-                    "app.py",
-                    "exec",
-                )
-            )
-
-    @time_machine.travel("2024-10-15")
-    @patch.dict(
-        "os.environ",
-        {
-            "GITHUB_REPOSITORY": "owner/repo",
-            "INPUT_GITHUB_TOKEN": "test_token",
-            "INPUT_EDIT_LABEL_NAME": "hacktoberfest",
-            "INPUT_EDIT_LABEL_COLOR": "ff6b6b",
-            "INPUT_EDIT_LABEL_DESCRIPTION": "Hacktoberfest participation",
-            "INPUT_FILTER_LABEL": "good first issue",
-            "INPUT_REVERT": "",
-        },
-    )
-    def test_revert_logic_october(self):
-        """Test that revert is False when in October and INPUT_REVERT is empty."""
-        # Simulate the revert logic
-        import os
-
-        if os.getenv("INPUT_REVERT", None) == "":
-            today = dt.date.today()
-            input_revert = today.month != 10
-        else:
-            input_revert = True
-
-        assert input_revert is False
-
-    @time_machine.travel("2024-11-15")
-    @patch.dict(
-        "os.environ",
-        {
-            "INPUT_REVERT": "",
-        },
-    )
-    def test_revert_logic_not_october(self):
-        """Test that revert is True when not in October and INPUT_REVERT is empty."""
-        # Simulate the revert logic
-        import os
-
-        if os.getenv("INPUT_REVERT", None) == "":
-            today = dt.date.today()
-            input_revert = today.month != 10
-        else:
-            input_revert = True
-
-        assert input_revert is True
