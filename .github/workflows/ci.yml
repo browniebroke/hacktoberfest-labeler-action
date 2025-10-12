@@ -78,7 +78,7 @@ jobs:
         with:
           no_operation_mode: true
 
-      # On main/stable branch: actual PSR + upload to PyPI & GitHub
+      # On main/stable branch: actual PSR
       - name: Release
         uses: python-semantic-release/python-semantic-release@v10
         id: release
@@ -98,3 +98,21 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.release.outputs.tag }}
+
+      # Update major and minor tags
+      - name: Make minor and major tags
+        if: steps.release.outputs.released == 'true'
+        run: |
+          FULL_TAG=$(git describe --tags)
+          echo "Full tag: ${FULL_TAG}"
+          MINOR=$(echo "${FULL_TAG}" | cut -d'.' -f1-2)
+          MAJOR=$(echo "${FULL_TAG}" | cut -d'.' -f1)
+          echo "Got minor and major tags: ${MINOR}, ${MAJOR}"
+          git tag -f "${MINOR}"
+          git tag -f "${MAJOR}"
+
+      - name: Push tags
+        if: steps.release.outputs.released == 'true'
+        run: git push origin HEAD:refs/heads/main --tags --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
