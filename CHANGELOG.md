@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v2.6.0 (2025-10-12)
+
+### Testing
+
+- Increase test coverage ([`a57aa66`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/a57aa6696f5e03e93fbaec440b296f2c4982bf10))
+
+### Bug fixes
+
+- Change filter label type from list of string to a string ([`0b1ed13`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/0b1ed13508efdd152e58b5882d128750a8c6bb07))
+
+### Features
+
+- Turn the app into a cli ([`0a2aba1`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/0a2aba15b9dcda51e410d22a9900d94b13c03b27))
+
 ## v2.5.0 (2025-10-12)
 
 ### Features
