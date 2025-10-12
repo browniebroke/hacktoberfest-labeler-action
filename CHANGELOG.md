@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v2.5.0 (2025-10-12)
+
+### Features
+
+- Convert to a composite action ([`8920ed1`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/8920ed152919336da9a1d7d118279efae2da0906))
+
+### Testing
+
+- Add tests and run them on ci ([`7944190`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/794419052aa01bc048ca054787741d5cfc8714d9))
+
 ## v2.4.2 (2025-10-03)
 
 ### Bug fixes

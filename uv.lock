@@ -402,7 +402,7 @@ wheels = [
 
 [[package]]
 name = "hacktoberfest-labeler-action"
-version = "2.4.2"
+version = "2.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "environs" },
@@ -425,10 +425,10 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pytest", specifier = ">=8.0.0" },
-    { name = "pytest-cov", specifier = ">=4.1.0" },
-    { name = "pytest-mock", specifier = ">=3.12.0" },
-    { name = "time-machine", specifier = ">=2.14.0" },
+    { name = "pytest", specifier = ">=8" },
+    { name = "pytest-cov", specifier = ">=4.1" },
+    { name = "pytest-mock", specifier = ">=3.12" },
+    { name = "time-machine", specifier = ">=2.14" },
 ]
 
 [[package]]
