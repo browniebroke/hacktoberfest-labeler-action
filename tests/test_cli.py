@@ -1,23 +1,26 @@
-"""Tests for the hacktoberfest-labeler-action app."""
+"""Tests for the hacktoberfest-labeler CLI."""
 
 from unittest.mock import MagicMock, patch
 
 from github import UnknownObjectException
+from typer.testing import CliRunner
 
-from src.app import (
+from hacktoberfest_labeler.cli import (
     add_label,
     add_topic,
+    app,
     get_or_create_label,
-    main,
     remove_label,
     remove_topic,
 )
+
+runner = CliRunner()
 
 
 class TestMain:
     """Tests for the main function."""
 
-    @patch("src.app.Github")
+    @patch("hacktoberfest_labeler.cli.Github")
     def test_main_normal_mode(self, mock_github_class, mock_repo, mock_label):
         """Test main function in normal (non-revert) mode."""
         # Setup
@@ -29,17 +32,29 @@ class TestMain:
         mock_repo.get_topics.return_value = []
 
         # Execute
-        main(
-            github_token="test_token",  # noqa: S106
-            github_repository="owner/repo",
-            filter_label_names=["good first issue"],
-            edit_label="hacktoberfest",
-            edit_label_color="ff6b6b",
-            edit_label_description="Hacktoberfest participation",
-            revert=False,
+        result = runner.invoke(
+            app,
+            [
+                "--github-token",
+                "test_token",
+                "--repository",
+                "owner/repo",
+                "--filter-label",
+                "good first issue",
+                "--edit-label-name",
+                "hacktoberfest",
+                "--edit-label-color",
+                "ff6b6b",
+                "--edit-label-description",
+                "Hacktoberfest participation",
+                "--no-revert",
+            ],
         )
 
         # Verify
+        assert result.exit_code == 0, (
+            f"Exit code: {result.exit_code}, Output: {result.output}"
+        )
         mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_label.assert_called_once_with("hacktoberfest")
@@ -49,7 +64,7 @@ class TestMain:
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["hacktoberfest"])
 
-    @patch("src.app.Github")
+    @patch("hacktoberfest_labeler.cli.Github")
     def test_main_revert_mode(self, mock_github_class, mock_repo):
         """Test main function in revert mode."""
         # Setup
@@ -60,17 +75,27 @@ class TestMain:
         mock_repo.get_topics.return_value = ["hacktoberfest", "python"]
 
         # Execute
-        main(
-            github_token="test_token",  # noqa: S106
-            github_repository="owner/repo",
-            filter_label_names=["good first issue"],
-            edit_label="hacktoberfest",
-            edit_label_color="ff6b6b",
-            edit_label_description="Hacktoberfest participation",
-            revert=True,
+        result = runner.invoke(
+            app,
+            [
+                "--github-token",
+                "test_token",
+                "--repository",
+                "owner/repo",
+                "--filter-label",
+                "good first issue",
+                "--edit-label-name",
+                "hacktoberfest",
+                "--edit-label-color",
+                "ff6b6b",
+                "--edit-label-description",
+                "Hacktoberfest participation",
+                "--revert",
+            ],
         )
 
         # Verify
+        assert result.exit_code == 0
         mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_issues.assert_called_once_with(

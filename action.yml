@@ -26,7 +26,7 @@ inputs:
     required: false
     default: "good first issue"
   revert:
-    description: "If the true the label will be removed instead of added"
+    description: "If true the label will be removed instead of added"
     required: false
     default: "0"
 
@@ -37,13 +37,10 @@ runs:
       with:
         python-version: "3.13"
 
-    - run: uv run src/app.py
+    - run: uv sync
       shell: bash
       working-directory: ${{ github.action_path }}
-      env:
-        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
-        INPUT_EDIT_LABEL_NAME: ${{ inputs.edit_label_name }}
-        INPUT_EDIT_LABEL_COLOR: ${{ inputs.edit_label_color }}
-        INPUT_EDIT_LABEL_DESCRIPTION: ${{ inputs.edit_label_description }}
-        INPUT_FILTER_LABEL: ${{ inputs.filter_label }}
-        INPUT_REVERT: ${{ inputs.revert }}
+
+    - run: uv run hacktoberfest-labeler --github-token ${{ inputs.github_token }} --filter-label '${{ inputs.filter_label }}' --edit-label-name '${{ inputs.edit_label_name }}' --edit-label-color '${{ inputs.edit_label_color }}' --edit-label-description '${{ inputs.edit_label_description }}'
+      shell: bash
+      working-directory: ${{ github.action_path }}
