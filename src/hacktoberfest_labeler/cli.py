@@ -30,13 +30,13 @@ def main(
         ),
     ] = None,
     filter_label: Annotated[
-        list[str],
+        str,
         typer.Option(
             "--filter-label",
             "-f",
-            help="Label(s) to use for filtering issues",
+            help="Label to use for filtering issues",
         ),
-    ] = ["good first issue"],  # noqa: B006
+    ] = "good first issue",
     edit_label_name: Annotated[
         str,
         typer.Option(
@@ -145,9 +145,9 @@ def get_or_create_label(
     return label_to_add
 
 
-def add_label(repo: Repository, filter_label_names: list[str], label_to_add: Label):
+def add_label(repo: Repository, filter_label: str, label_to_add: Label):
     """Add given label to all issues labeled with filter label."""
-    issues_list = repo.get_issues(state="open", labels=filter_label_names)
+    issues_list = repo.get_issues(state="open", labels=[filter_label])
     for issue in issues_list:
         issue.add_to_labels(label_to_add)
 
