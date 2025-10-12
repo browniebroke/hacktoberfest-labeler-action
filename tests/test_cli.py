@@ -227,7 +227,7 @@ class TestAddLabel:
         """Test adding label when no issues match filter."""
         mock_repo.get_issues.return_value = []
 
-        add_label(mock_repo, ["good first issue"], mock_label)
+        add_label(mock_repo, "good first issue", mock_label)
 
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["good first issue"]
@@ -237,7 +237,7 @@ class TestAddLabel:
         """Test adding label to a single issue."""
         mock_repo.get_issues.return_value = [mock_issue]
 
-        add_label(mock_repo, ["good first issue"], mock_label)
+        add_label(mock_repo, "good first issue", mock_label)
 
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["good first issue"]
@@ -251,7 +251,7 @@ class TestAddLabel:
         issue3 = MagicMock()
         mock_repo.get_issues.return_value = [issue1, issue2, issue3]
 
-        add_label(mock_repo, ["good first issue"], mock_label)
+        add_label(mock_repo, "good first issue", mock_label)
 
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["good first issue"]
@@ -259,16 +259,6 @@ class TestAddLabel:
         issue1.add_to_labels.assert_called_once_with(mock_label)
         issue2.add_to_labels.assert_called_once_with(mock_label)
         issue3.add_to_labels.assert_called_once_with(mock_label)
-
-    def test_add_label_multiple_filter_labels(self, mock_repo, mock_label, mock_issue):
-        """Test adding label with multiple filter labels."""
-        mock_repo.get_issues.return_value = [mock_issue]
-        filter_labels = ["good first issue", "help wanted"]
-
-        add_label(mock_repo, filter_labels, mock_label)
-
-        mock_repo.get_issues.assert_called_once_with(state="open", labels=filter_labels)
-        mock_issue.add_to_labels.assert_called_once_with(mock_label)
 
 
 class TestAddTopic:
