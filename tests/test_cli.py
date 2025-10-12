@@ -1,8 +1,7 @@
 """Tests for the hacktoberfest-labeler CLI."""
 
-from unittest.mock import MagicMock, patch
-
 from github import UnknownObjectException
+from pytest_mock import MockerFixture
 from typer.testing import CliRunner
 
 from hacktoberfest_labeler.cli import (
@@ -20,11 +19,14 @@ runner = CliRunner()
 class TestMain:
     """Tests for the main function."""
 
-    @patch("hacktoberfest_labeler.cli.Github")
-    def test_main_normal_mode(self, mock_github_class, mock_repo, mock_label):
+    def test_main_normal_mode(self, mocker: MockerFixture, mock_repo, mock_label):
         """Test main function in normal (non-revert) mode."""
         # Setup
-        mock_github = MagicMock()
+        mock_github_class = mocker.patch(
+            "hacktoberfest_labeler.cli.Github",
+            autospec=True,
+        )
+        mock_github = mocker.MagicMock()
         mock_github_class.return_value = mock_github
         mock_github.get_repo.return_value = mock_repo
         mock_repo.get_label.return_value = mock_label
@@ -64,11 +66,13 @@ class TestMain:
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["hacktoberfest"])
 
-    @patch("hacktoberfest_labeler.cli.Github")
-    def test_main_revert_mode(self, mock_github_class, mock_repo):
+    def test_main_revert_mode(self, mocker: MockerFixture, mock_repo):
         """Test main function in revert mode."""
         # Setup
-        mock_github = MagicMock()
+        mock_github_class = mocker.patch(
+            "hacktoberfest_labeler.cli.Github", autospec=True
+        )
+        mock_github = mocker.MagicMock()
         mock_github_class.return_value = mock_github
         mock_github.get_repo.return_value = mock_repo
         mock_repo.get_issues.return_value = []
@@ -129,11 +133,11 @@ class TestRemoveLabel:
         )
         mock_issue.remove_from_labels.assert_called_once_with("hacktoberfest")
 
-    def test_remove_label_multiple_issues(self, mock_repo):
+    def test_remove_label_multiple_issues(self, mocker: MockerFixture, mock_repo):
         """Test removing label from multiple issues."""
-        issue1 = MagicMock()
-        issue2 = MagicMock()
-        issue3 = MagicMock()
+        issue1 = mocker.MagicMock()
+        issue2 = mocker.MagicMock()
+        issue3 = mocker.MagicMock()
         mock_repo.get_issues.return_value = [issue1, issue2, issue3]
 
         remove_label(mock_repo, "hacktoberfest")
@@ -244,11 +248,13 @@ class TestAddLabel:
         )
         mock_issue.add_to_labels.assert_called_once_with(mock_label)
 
-    def test_add_label_multiple_issues(self, mock_repo, mock_label):
+    def test_add_label_multiple_issues(
+        self, mocker: MockerFixture, mock_repo, mock_label
+    ):
         """Test adding label to multiple issues."""
-        issue1 = MagicMock()
-        issue2 = MagicMock()
-        issue3 = MagicMock()
+        issue1 = mocker.MagicMock()
+        issue2 = mocker.MagicMock()
+        issue3 = mocker.MagicMock()
         mock_repo.get_issues.return_value = [issue1, issue2, issue3]
 
         add_label(mock_repo, "good first issue", mock_label)
