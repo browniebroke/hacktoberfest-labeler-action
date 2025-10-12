@@ -29,3 +29,16 @@ def mock_issue(mocker: MockerFixture):
     """Create a mock Issue instance."""
     issue = mocker.MagicMock()
     return issue
+
+
+@pytest.fixture
+def mock_github(mocker: MockerFixture, mock_repo):
+    """Create a mock Github instance with repository setup."""
+    mock_github_class = mocker.patch(
+        "hacktoberfest_labeler.cli.Github",
+        autospec=True,
+    )
+    mock_github_instance = mocker.MagicMock()
+    mock_github_class.return_value = mock_github_instance
+    mock_github_instance.get_repo.return_value = mock_repo
+    return mock_github_instance

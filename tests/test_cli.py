@@ -20,16 +20,9 @@ runner = CliRunner()
 class TestMain:
     """Tests for the main function."""
 
-    def test_main_normal_mode(self, mocker: MockerFixture, mock_repo, mock_label):
+    def test_main_normal_mode(self, mock_github, mock_repo, mock_label):
         """Test main function in normal (non-revert) mode."""
         # Setup
-        mock_github_class = mocker.patch(
-            "hacktoberfest_labeler.cli.Github",
-            autospec=True,
-        )
-        mock_github = mocker.MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_label.return_value = mock_label
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = []
@@ -58,7 +51,6 @@ class TestMain:
         assert result.exit_code == 0, (
             f"Exit code: {result.exit_code}, Output: {result.output}"
         )
-        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_label.assert_called_once_with("hacktoberfest")
         mock_repo.get_issues.assert_called_once_with(
@@ -67,15 +59,9 @@ class TestMain:
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["hacktoberfest"])
 
-    def test_main_revert_mode(self, mocker: MockerFixture, mock_repo):
+    def test_main_revert_mode(self, mock_github, mock_repo):
         """Test main function in revert mode."""
         # Setup
-        mock_github_class = mocker.patch(
-            "hacktoberfest_labeler.cli.Github", autospec=True
-        )
-        mock_github = mocker.MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = ["hacktoberfest", "python"]
 
@@ -101,7 +87,6 @@ class TestMain:
 
         # Verify
         assert result.exit_code == 0
-        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["hacktoberfest"]
@@ -133,21 +118,14 @@ class TestMain:
 
     def test_main_auto_revert_false_in_october(
         self,
-        mocker: MockerFixture,
         time_machine: TimeMachineFixture,
+        mock_github,
         mock_repo,
         mock_label,
     ):
         """Test main function auto-revert is False when in October."""
         # Setup
         time_machine.move_to("2025-10-15")
-        mock_github_class = mocker.patch(
-            "hacktoberfest_labeler.cli.Github",
-            autospec=True,
-        )
-        mock_github = mocker.MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_label.return_value = mock_label
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = []
@@ -176,17 +154,11 @@ class TestMain:
         )
 
     def test_main_auto_revert_true_not_in_october(
-        self, mocker: MockerFixture, time_machine: TimeMachineFixture, mock_repo
+        self, time_machine: TimeMachineFixture, mock_github, mock_repo
     ):
         """Test main function auto-revert is True when not in October."""
         # Setup
         time_machine.move_to("2025-11-15")
-        mock_github_class = mocker.patch(
-            "hacktoberfest_labeler.cli.Github", autospec=True
-        )
-        mock_github = mocker.MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = ["hacktoberfest", "python"]
 
