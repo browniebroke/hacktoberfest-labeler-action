@@ -1,8 +1,8 @@
 """Tests for the hacktoberfest-labeler CLI."""
 
-from unittest.mock import MagicMock, patch
-
 from github import UnknownObjectException
+from pytest_mock import MockerFixture
+from time_machine import TimeMachineFixture
 from typer.testing import CliRunner
 
 from hacktoberfest_labeler.cli import (
@@ -20,13 +20,9 @@ runner = CliRunner()
 class TestMain:
     """Tests for the main function."""
 
-    @patch("hacktoberfest_labeler.cli.Github")
-    def test_main_normal_mode(self, mock_github_class, mock_repo, mock_label):
+    def test_main_normal_mode(self, mock_github, mock_repo, mock_label):
         """Test main function in normal (non-revert) mode."""
         # Setup
-        mock_github = MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_label.return_value = mock_label
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = []
@@ -55,7 +51,6 @@ class TestMain:
         assert result.exit_code == 0, (
             f"Exit code: {result.exit_code}, Output: {result.output}"
         )
-        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_label.assert_called_once_with("hacktoberfest")
         mock_repo.get_issues.assert_called_once_with(
@@ -64,13 +59,9 @@ class TestMain:
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["hacktoberfest"])
 
-    @patch("hacktoberfest_labeler.cli.Github")
-    def test_main_revert_mode(self, mock_github_class, mock_repo):
+    def test_main_revert_mode(self, mock_github, mock_repo):
         """Test main function in revert mode."""
         # Setup
-        mock_github = MagicMock()
-        mock_github_class.return_value = mock_github
-        mock_github.get_repo.return_value = mock_repo
         mock_repo.get_issues.return_value = []
         mock_repo.get_topics.return_value = ["hacktoberfest", "python"]
 
@@ -96,13 +87,102 @@ class TestMain:
 
         # Verify
         assert result.exit_code == 0
-        mock_github_class.assert_called_once_with(login_or_token="test_token")  # noqa: S106
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_issues.assert_called_once_with(
             state="open", labels=["hacktoberfest"]
         )
         mock_repo.get_topics.assert_called_once()
         mock_repo.replace_topics.assert_called_once_with(["python"])
+
+    def test_main_missing_repository(self, mocker: MockerFixture):
+        """Test main function when repository is not provided."""
+        # Setup
+        mocker.patch.dict("os.environ", {"GITHUB_REPOSITORY": ""}, clear=False)
+
+        # Execute
+        result = runner.invoke(
+            app,
+            [
+                "--github-token",
+                "test_token",
+                "--filter-label",
+                "good first issue",
+                "--edit-label-name",
+                "hacktoberfest",
+            ],
+        )
+
+        # Verify
+        assert result.exit_code == 1
+        assert "Error: --repository is required" in result.output
+
+    def test_main_auto_revert_false_in_october(
+        self,
+        time_machine: TimeMachineFixture,
+        mock_github,
+        mock_repo,
+        mock_label,
+    ):
+        """Test main function auto-revert is False when in October."""
+        # Setup
+        time_machine.move_to("2025-10-15")
+        mock_repo.get_label.return_value = mock_label
+        mock_repo.get_issues.return_value = []
+        mock_repo.get_topics.return_value = []
+
+        # Execute - no --revert flag, should default based on month
+        result = runner.invoke(
+            app,
+            [
+                "--github-token",
+                "test_token",
+                "--repository",
+                "owner/repo",
+                "--filter-label",
+                "good first issue",
+                "--edit-label-name",
+                "hacktoberfest",
+            ],
+        )
+
+        # Verify - should be in normal mode (not revert) since it's October
+        assert result.exit_code == 0
+        assert "Applying Hacktoberfest labels" in result.output
+        mock_repo.get_label.assert_called_once_with("hacktoberfest")
+        mock_repo.get_issues.assert_called_once_with(
+            state="open", labels=["good first issue"]
+        )
+
+    def test_main_auto_revert_true_not_in_october(
+        self, time_machine: TimeMachineFixture, mock_github, mock_repo
+    ):
+        """Test main function auto-revert is True when not in October."""
+        # Setup
+        time_machine.move_to("2025-11-15")
+        mock_repo.get_issues.return_value = []
+        mock_repo.get_topics.return_value = ["hacktoberfest", "python"]
+
+        # Execute - no --revert flag, should default based on month
+        result = runner.invoke(
+            app,
+            [
+                "--github-token",
+                "test_token",
+                "--repository",
+                "owner/repo",
+                "--filter-label",
+                "good first issue",
+                "--edit-label-name",
+                "hacktoberfest",
+            ],
+        )
+
+        # Verify - should be in revert mode since it's November
+        assert result.exit_code == 0
+        assert "Reverting Hacktoberfest changes" in result.output
+        mock_repo.get_issues.assert_called_once_with(
+            state="open", labels=["hacktoberfest"]
+        )
 
 
 class TestRemoveLabel:
@@ -129,11 +209,11 @@ class TestRemoveLabel:
         )
         mock_issue.remove_from_labels.assert_called_once_with("hacktoberfest")
 
-    def test_remove_label_multiple_issues(self, mock_repo):
+    def test_remove_label_multiple_issues(self, mocker: MockerFixture, mock_repo):
         """Test removing label from multiple issues."""
-        issue1 = MagicMock()
-        issue2 = MagicMock()
-        issue3 = MagicMock()
+        issue1 = mocker.MagicMock()
+        issue2 = mocker.MagicMock()
+        issue3 = mocker.MagicMock()
         mock_repo.get_issues.return_value = [issue1, issue2, issue3]
 
         remove_label(mock_repo, "hacktoberfest")
@@ -244,11 +324,13 @@ class TestAddLabel:
         )
         mock_issue.add_to_labels.assert_called_once_with(mock_label)
 
-    def test_add_label_multiple_issues(self, mock_repo, mock_label):
+    def test_add_label_multiple_issues(
+        self, mocker: MockerFixture, mock_repo, mock_label
+    ):
         """Test adding label to multiple issues."""
-        issue1 = MagicMock()
-        issue2 = MagicMock()
-        issue3 = MagicMock()
+        issue1 = mocker.MagicMock()
+        issue2 = mocker.MagicMock()
+        issue3 = mocker.MagicMock()
         mock_repo.get_issues.return_value = [issue1, issue2, issue3]
 
         add_label(mock_repo, "good first issue", mock_label)
