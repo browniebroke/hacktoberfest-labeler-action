@@ -41,6 +41,13 @@ runs:
       shell: bash
       working-directory: ${{ github.action_path }}
 
-    - run: uv run hacktoberfest-labeler --github-token ${{ inputs.github_token }} --filter-label '${{ inputs.filter_label }}' --edit-label-name '${{ inputs.edit_label_name }}' --edit-label-color '${{ inputs.edit_label_color }}' --edit-label-description '${{ inputs.edit_label_description }}'
+    - run: |
+        uv run hacktoberfest-labeler \
+          --github-token '${{ inputs.github_token }}' \
+          --filter-label '${{ inputs.filter_label }}' \
+          --edit-label-name '${{ inputs.edit_label_name }}' \
+          --edit-label-color '${{ inputs.edit_label_color }}' \
+          --edit-label-description '${{ inputs.edit_label_description }}' \
+          ${{ inputs.revert == '1' && '--revert' || '' }}
       shell: bash
       working-directory: ${{ github.action_path }}
