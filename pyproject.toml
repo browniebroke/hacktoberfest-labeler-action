@@ -3,9 +3,9 @@ build-backend = "setuptools.build_meta"
 requires = [ "setuptools>=77.0.3" ]
 
 [project]
-name = "hacktoberfest-labeler-action"
+name = "hacktoberfest-labeler"
 version = "2.5.0"
-description = "A Github Action to automate Hacktoberfest"
+description = "A CLI tool to automate Hacktoberfest labeling"
 readme = "README.md"
 keywords = [
   "actions",
@@ -32,10 +32,11 @@ classifiers = [
 ]
 
 dependencies = [
-  "environs==14.*",
   "pygithub==2.*",
+  "typer>=0.12",
 ]
 urls.repository = "https://github.com/browniebroke/hacktoberfest-labeler-action"
+scripts.hacktoberfest-labeler = "hacktoberfest_labeler.cli:app"
 
 [dependency-groups]
 dev = [
