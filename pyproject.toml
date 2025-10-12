@@ -89,7 +89,7 @@ addopts = "-v -Wdefault --cov=src"
 [tool.semantic_release]
 version_toml = [ "pyproject.toml:project.version" ]
 version_variables = [
-  "src/__init__.py:__version__",
+  "src/hacktoberfest_labeler/__init__.py:__version__",
 ]
 build_command = """
 pip install uv
