@@ -32,3 +32,16 @@ Note that the default `secrets.GITHUB_TOKEN` hasn't got [enough permissions][tok
 
 [token-permissions]: https://docs.github.com/en/free-pro-team@latest/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token
 [pat]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+
+##  Contributing
+
+We welcome contributions from everyone!  
+If you’d like to improve this GitHub Action:
+
+1. **Fork** the repository to your own GitHub account.  
+2. **Create a new branch** for your changes.  
+3. Make your edits and commit them using [Conventional Commits](https://www.conventionalcommits.org).  
+4. Open a **Pull Request**.
+
+This project participates in **Hacktoberfest **, so your merged pull requests count toward your progress!
+git add README.md
