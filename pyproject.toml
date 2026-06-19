@@ -30,7 +30,6 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Topic :: Software Development",
 ]
-
 dependencies = [
   "pygithub==2.*",
   "typer>=0.12",
@@ -49,7 +48,6 @@ dev = [
 [tool.ruff]
 target-version = "py310"
 line-length = 88
-
 lint.select = [
   "B",   # flake8-bugbear
   "C4",  # flake8-comprehensions
@@ -83,8 +81,8 @@ lint.isort.known-first-party = [ "tests", "src" ]
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
-[tool.pytest.ini_options]
-addopts = "-v -Wdefault --cov=src"
+[tool.pytest]
+ini_options.addopts = "-v -Wdefault --cov=src"
 
 [tool.semantic_release]
 version_toml = [ "pyproject.toml:project.version" ]
@@ -99,20 +97,12 @@ uv build
 """
 upload_to_pypi = false
 upload_to_release = false
-
-[tool.semantic_release.changelog]
-exclude_commit_patterns = [
+branches.main.match = "main"
+branches.noop.match = "(?!main$)"
+branches.noop.prerelease = true
+changelog.exclude_commit_patterns = [
   "chore.*",
   "ci.*",
   "Merge pull request .*",
 ]
-
-[tool.semantic_release.changelog.environment]
-keep_trailing_newline = true
-
-[tool.semantic_release.branches.main]
-match = "main"
-
-[tool.semantic_release.branches.noop]
-match = "(?!main$)"
-prerelease = true
+changelog.environment.keep_trailing_newline = true
