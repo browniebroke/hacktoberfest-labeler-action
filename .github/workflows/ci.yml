@@ -15,8 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.0
+        with:
+          ref: ${{ github.head_ref || github.ref }}
       - uses: astral-sh/setup-uv@v8.2.0
       - uses: j178/prek-action@v2.0.5
+        continue-on-error: true
+      - uses: pre-commit-ci/lite-action@v1.1.0
+        with:
+          msg: "chore: auto-fix from pre-commit hooks"
 
   test:
     runs-on: ${{ matrix.os }}
