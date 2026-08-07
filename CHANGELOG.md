@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.7.0 (2026-08-07)
+
+### Features
+
+- Add support for python 3.15 ([`434aa9f`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/434aa9f1b3bdef147aacbea293c9c0ce58e71b53))
+
 ## v2.6.0 (2025-10-12)
 
 ### Testing
