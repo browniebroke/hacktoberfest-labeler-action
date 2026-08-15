@@ -46,12 +46,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: ${{ matrix.python-version }}
-          allow-prereleases: true
-      - uses: astral-sh/setup-uv@v10.0.1
-      - run: uv sync --no-python-downloads
+      - run: uv sync
         shell: bash
       - run: uv run pytest --cov-report=xml
         shell: bash
