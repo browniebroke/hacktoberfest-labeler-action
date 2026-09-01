@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Release
-        uses: python-semantic-release/python-semantic-release@v10
+        uses: python-semantic-release/python-semantic-release@9a026e9303981c866c3425723009becb2437c757 # v10
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
