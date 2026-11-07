@@ -471,7 +471,7 @@ wheels = [
 
 [[package]]
 name = "hacktoberfest-labeler"
-version = "2.7.0"
+version = "3.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "pygithub" },

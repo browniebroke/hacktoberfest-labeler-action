@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.0.0 (2026-11-07)
+
+### Features
+
+- Drop support for python 3.10 ([`939bd27`](https://github.com/browniebroke/hacktoberfest-labeler-action/commit/939bd2733806f17c6bea37e44502bf2b33ca7dbc))
+
 ## v2.7.0 (2026-08-07)
 
 ### Features
